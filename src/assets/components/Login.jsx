@@ -1,13 +1,14 @@
 import { useState } from "react";
+import axios from "axios";
 
 function Login() {
   const [role, setRole] = useState("student");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!email || !password) {
@@ -21,30 +22,37 @@ function Login() {
     }
 
     setError("");
+    setSuccess("");
 
-    console.log({
-      role,
-      email,
-      password
-    });
+    try {
+      // Send data directly to backend
+      const res = await axios.post("http://localhost:3000/api/users", {
+        email,
+        password,
+        role
+      });
 
-    alert(`Login Successful as ${role} 🚀`);
+      setSuccess(res.data.message || "User added successfully");
+      setEmail("");
+      setPassword("");
+
+    } catch (err) {
+      console.error(err); // see actual backend error
+      setError(err.response?.data?.message || "Something went wrong");
+    }
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-yellow-300 via-yellow-200 to-teal-400 font-[Poppins]">
-
       <div className="bg-white rounded-3xl shadow-2xl p-10 w-[90%] max-w-md">
-
         <h2 className="text-3xl font-bold text-center text-green-900 mb-8">
-          Welcome Back
+          Add User
         </h2>
 
         <form onSubmit={handleSubmit} className="space-y-6">
-
-          {/* Role Selection */}
+          {/* Role */}
           <div>
-            <label className="text-sm text-gray-600">Login As</label>
+            <label className="text-sm text-gray-600">Role</label>
             <select
               className="w-full mt-2 px-4 py-3 rounded-xl border border-gray-300"
               value={role}
@@ -70,42 +78,25 @@ function Login() {
           {/* Password */}
           <div>
             <label className="text-sm text-gray-600">Password</label>
-            <div className="relative">
-              <input
-                type={showPassword ? "text" : "password"}
-                placeholder="Enter your password"
-                className="w-full mt-2 px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-teal-400"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-
-              <span
-                onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-4 top-5 cursor-pointer text-sm text-gray-500"
-              >
-                {showPassword ? "Hide" : "Show"}
-              </span>
-            </div>
+            <input
+              type="password"
+              placeholder="Enter your password"
+              className="w-full mt-2 px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-teal-400"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
           </div>
 
-          {error && (
-            <p className="text-red-500 text-sm text-center">{error}</p>
-          )}
+          {error && <p className="text-red-500 text-sm text-center">{error}</p>}
+          {success && <p className="text-green-500 text-sm text-center">{success}</p>}
 
           <button
             type="submit"
             className="w-full bg-yellow-400 hover:bg-yellow-500 py-3 rounded-xl font-semibold transition"
           >
-            LOG IN
+            ADD USER
           </button>
-
         </form>
-
-        <p className="text-center text-sm text-gray-500 mt-6">
-          Don't have an account?{" "}
-          <span className="text-teal-600 cursor-pointer">Sign up</span>
-        </p>
-
       </div>
     </div>
   );
