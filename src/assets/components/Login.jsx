@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 function Login() {
+  const [role, setRole] = useState("student");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -20,12 +21,19 @@ function Login() {
     }
 
     setError("");
-    alert("Login Successful 🚀");
+
+    console.log({
+      role,
+      email,
+      password
+    });
+
+    alert(`Login Successful as ${role} 🚀`);
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-yellow-300 via-yellow-200 to-teal-400 font-[Poppins]">
-      
+
       <div className="bg-white rounded-3xl shadow-2xl p-10 w-[90%] max-w-md">
 
         <h2 className="text-3xl font-bold text-center text-green-900 mb-8">
@@ -33,6 +41,19 @@ function Login() {
         </h2>
 
         <form onSubmit={handleSubmit} className="space-y-6">
+
+          {/* Role Selection */}
+          <div>
+            <label className="text-sm text-gray-600">Login As</label>
+            <select
+              className="w-full mt-2 px-4 py-3 rounded-xl border border-gray-300"
+              value={role}
+              onChange={(e) => setRole(e.target.value)}
+            >
+              <option value="student">Student</option>
+              <option value="alumni">Alumni</option>
+            </select>
+          </div>
 
           {/* Email */}
           <div>
@@ -67,12 +88,10 @@ function Login() {
             </div>
           </div>
 
-          {/* Error Message */}
           {error && (
             <p className="text-red-500 text-sm text-center">{error}</p>
           )}
 
-          {/* Login Button */}
           <button
             type="submit"
             className="w-full bg-yellow-400 hover:bg-yellow-500 py-3 rounded-xl font-semibold transition"
