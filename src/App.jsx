@@ -1,5 +1,8 @@
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Login from "./assets/components/Login";
+import Alumni from "./Alumni.jsx";
+import About from "./About.jsx";
+
 function Home() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-yellow-300 via-yellow-200 to-teal-400 font-[Poppins]">
@@ -35,7 +38,7 @@ function Home() {
 
             <p className="mt-6 text-gray-700 text-sm leading-relaxed">
               Reconnect with your alumni community.
-Discover mentorship, jobs, and new possibilities
+              Discover mentorship, jobs, and new possibilities
             </p>
 
             <button className="mt-8 bg-yellow-400 hover:bg-yellow-500 px-8 py-3 rounded-full font-medium transition">
@@ -62,6 +65,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/alumni" element={<Alumni />} />
+        <Route path="/about" element={<About />} />
       </Routes>
     </Router>
   );
