@@ -25,7 +25,7 @@ function Login() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-yellow-300 via-yellow-200 to-teal-400 font-[Poppins]">
-
+      
       <div className="bg-white rounded-3xl shadow-2xl p-10 w-[90%] max-w-md">
 
         <h2 className="text-3xl font-bold text-center text-green-900 mb-8">
@@ -57,6 +57,7 @@ function Login() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
+
               <span
                 onClick={() => setShowPassword(!showPassword)}
                 className="absolute right-4 top-5 cursor-pointer text-sm text-gray-500"
@@ -66,12 +67,12 @@ function Login() {
             </div>
           </div>
 
-          {/* Error */}
+          {/* Error Message */}
           {error && (
             <p className="text-red-500 text-sm text-center">{error}</p>
           )}
 
-          {/* Button */}
+          {/* Login Button */}
           <button
             type="submit"
             className="w-full bg-yellow-400 hover:bg-yellow-500 py-3 rounded-xl font-semibold transition"
@@ -82,7 +83,8 @@ function Login() {
         </form>
 
         <p className="text-center text-sm text-gray-500 mt-6">
-          Don't have an account? <span className="text-teal-600 cursor-pointer">Sign up</span>
+          Don't have an account?{" "}
+          <span className="text-teal-600 cursor-pointer">Sign up</span>
         </p>
 
       </div>
