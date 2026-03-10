@@ -22,6 +22,7 @@ function Login() {
     }
 
     setError("");
+
     setSuccess("");
 
     try {
@@ -40,10 +41,21 @@ function Login() {
       console.error(err); // see actual backend error
       setError(err.response?.data?.message || "Something went wrong");
     }
+
+
+    console.log({
+      role,
+      email,
+      password
+    });
+
+    alert(`Login Successful as ${role} 🚀`);
+
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-yellow-300 via-yellow-200 to-teal-400 font-[Poppins]">
+
       <div className="bg-white rounded-3xl shadow-2xl p-10 w-[90%] max-w-md">
         <h2 className="text-3xl font-bold text-center text-green-900 mb-8">
           Add User
@@ -53,6 +65,19 @@ function Login() {
           {/* Role */}
           <div>
             <label className="text-sm text-gray-600">Role</label>
+            <select
+              className="w-full mt-2 px-4 py-3 rounded-xl border border-gray-300"
+              value={role}
+              onChange={(e) => setRole(e.target.value)}
+            >
+              <option value="student">Student</option>
+              <option value="alumni">Alumni</option>
+            </select>
+          </div>
+
+          {/* Role Selection */}
+          <div>
+            <label className="text-sm text-gray-600">Login As</label>
             <select
               className="w-full mt-2 px-4 py-3 rounded-xl border border-gray-300"
               value={role}
@@ -89,6 +114,9 @@ function Login() {
 
           {error && <p className="text-red-500 text-sm text-center">{error}</p>}
           {success && <p className="text-green-500 text-sm text-center">{success}</p>}
+          {error && (
+            <p className="text-red-500 text-sm text-center">{error}</p>
+          )}
 
           <button
             type="submit"
