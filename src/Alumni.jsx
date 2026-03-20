@@ -197,5 +197,17 @@ function Alumni() {
     </div>
   );
 }
+const handleSubmit = (e) => {
+  e.preventDefault();
+  const newAlum = { id: Date.now(), ...formData, badge: true };
+  setAlumniList([newAlum, ...alumniList]);
+  setShowModal(false);
+  setFormData({ name: "", profession: "", skills: "", college: "", email: "", linkedin: "", achievements: "" });
+  
+  // ADD THIS LINE:
+  window.dispatchEvent(new CustomEvent('alumniProfileAdded'));
+  
+  alert("Profile added! You've earned your first badge 🎉");
+};
 
 export default Alumni;

@@ -1,7 +1,11 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
 import student from './assets/students.png'
 
 function Home() {
+  const [profileOpen, setProfileOpen] = useState(false);
+  const navigate = useNavigate();
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-yellow-300 via-yellow-200 to-teal-400 font-[Poppins]">
       <div className="w-[90%] max-w-6xl bg-gray-100 rounded-3xl shadow-2xl p-10 lg:p-16">
@@ -21,14 +25,46 @@ function Home() {
             <Link to="/" className="hover:underline">Home</Link>
             <Link to="/about" className="font-semibold hover:underline">About</Link>
             <Link to="/alumni" className="font-semibold hover:underline">Alumni</Link>
-            <Link to="/login">
-              <button className="bg-yellow-400 hover:bg-yellow-500 px-5 py-2 rounded-full font-medium transition">
-                LOG IN
+            
+            {/* Profile Dropdown */}
+            <div className="relative">
+              <button 
+                onClick={() => setProfileOpen(!profileOpen)}
+                className="flex items-center gap-2 bg-teal-600 hover:bg-teal-700 text-white px-5 py-2 rounded-full font-medium transition shadow-lg"
+              >
+                <span>👤</span>
+                Profile
               </button>
-            </Link>
+              
+              {profileOpen && (
+                <div className="absolute right-0 mt-2 w-48 bg-white rounded-2xl shadow-2xl border border-gray-100 py-2 z-50">
+                  <Link 
+                    to="/profile" 
+                    className="block px-6 py-3 text-gray-700 hover:bg-teal-50 hover:text-teal-700 font-medium"
+                    onClick={() => setProfileOpen(false)}
+                  >
+                    👤 My Profile
+                  </Link>
+                  <Link 
+                    to="/dashboard" 
+                    className="block px-6 py-3 text-gray-700 hover:bg-teal-50 hover:text-teal-700 font-medium"
+                    onClick={() => setProfileOpen(false)}
+                  >
+                    📊 Dashboard
+                  </Link>
+                  <Link 
+                    to="/posts" 
+                    className="block px-6 py-3 text-gray-700 hover:bg-teal-50 hover:text-teal-700 font-medium"
+                    onClick={() => setProfileOpen(false)}
+                  >
+                    ✍️ Posts
+                  </Link>
+                </div>
+              )}
+            </div>
           </nav>
         </header>
-        {/* Rest of your code unchanged... */}
+        
         <section className="mt-16 flex flex-col lg:flex-row items-center justify-between gap-12">
           <div className="max-w-xl">
             <h2 className="text-5xl lg:text-6xl font-bold text-green-900 leading-tight">
