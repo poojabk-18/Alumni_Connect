@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useAuth } from "./AuthContext";  // ✅ ADDED FOR DASHBOARD SYNC
 
 const mockAlumni = [  
   { id: 1, name: "Mukesh Chettri", profession: "Core Guidance", skills: "Tech", college: "2023", email: "mukesh@example.com", linkedin: "linkedin.com/in/mukesh", badge: true },
@@ -13,6 +14,7 @@ const mockAlumni = [
 ];
 
 function Alumni() {
+  const { addAlumniBadge } = useAuth();  // ✅ FOR DASHBOARD UPDATE
   const [alumniList, setAlumniList] = useState(mockAlumni);
   const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState({
@@ -30,12 +32,16 @@ function Alumni() {
     const newAlum = {
       id: Date.now(),
       ...formData,
-      badge: true,  // Earns first badge
+      badge: true,
     };
     setAlumniList([newAlum, ...alumniList]);
     setShowModal(false);
     setFormData({ name: "", profession: "", skills: "", college: "", email: "", linkedin: "", achievements: "" });
-    alert("Profile added! You've earned your first badge 🎉");
+    
+    // ✅ UPDATE DASHBOARD BADGES
+    addAlumniBadge();
+    
+    alert("Profile added! 🎓 First Alumni Profile badge earned!");
   };
 
   return (
@@ -47,28 +53,15 @@ function Alumni() {
             ← Back to Home
           </Link>
           <h1 className="text-4xl font-bold text-teal-700 tracking-wide">
-            Find Your Nexus Mentor
+            Find Your Mentor
           </h1>
         </div>
 
-        {/* Filters & Add Button - Matching reference */}
-        <div className="flex flex-wrap items-center justify-between gap-4 mb-8 bg-white/80 backdrop-blur-md rounded-2xl p-6 shadow-xl">
-          <div className="flex gap-2 text-sm text-teal-700 bg-teal-100 px-4 py-2 rounded-full">
-            <span>Industry</span>
-            <select className="bg-transparent border-none outline-none">
-              <option>Tech</option>
-              <option>Finance</option>
-              <option>Company</option>
-              <option>Design</option>
-              <option>Expert</option>
-            </select>
-          </div>
-          <div className="text-teal-600 text-sm bg-yellow-200 px-4 py-2 rounded-full">
-            Get matched in 30s • 232 Active
-          </div>
+        {/* ✅ SIMPLIFIED - ONLY ADD PROFILE BUTTON */}
+        <div className="flex justify-end mb-8">
           <button
             onClick={() => setShowModal(true)}
-            className="bg-teal-600 hover:bg-teal-700 text-white px-8 py-3 rounded-full font-medium transition shadow-lg"
+            className="bg-teal-800 hover:bg-teal-700 text-white px-8 py-3 rounded-full font-medium transition shadow-lg"
           >
             ➕ Add Profile
           </button>
@@ -88,7 +81,7 @@ function Alumni() {
               </div>
               <p className="text-gray-600 text-sm text-center mb-2">{alum.college}</p>
               
-              {/* Email & LinkedIn on Cards */}
+              {/* Email & LinkedIn */}
               <div className="space-y-1 mb-4 text-xs text-gray-500 text-center">
                 <div className="flex items-center justify-center gap-1">
                   <span>📧</span>
@@ -112,7 +105,7 @@ function Alumni() {
         </div>
       </div>
 
-      {/* UPDATED Add Profile Modal with Email + LinkedIn */}
+      {/* Modal - UNCHANGED */}
       {showModal && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-3xl p-8 max-w-md w-full max-h-[90vh] overflow-y-auto shadow-2xl">
@@ -150,7 +143,6 @@ function Alumni() {
                 className="w-full p-3 border border-gray-300 rounded-xl focus:outline-none focus:border-teal-500"
                 required
               />
-              {/* NEW EMAIL FIELD */}
               <input
                 type="email"
                 placeholder="Email *"
@@ -159,7 +151,6 @@ function Alumni() {
                 className="w-full p-3 border border-gray-300 rounded-xl focus:outline-none focus:border-teal-500"
                 required
               />
-              {/* NEW LINKEDIN FIELD */}
               <input
                 type="text"
                 placeholder="LinkedIn (linkedin.com/in/username) *"
@@ -197,17 +188,5 @@ function Alumni() {
     </div>
   );
 }
-const handleSubmit = (e) => {
-  e.preventDefault();
-  const newAlum = { id: Date.now(), ...formData, badge: true };
-  setAlumniList([newAlum, ...alumniList]);
-  setShowModal(false);
-  setFormData({ name: "", profession: "", skills: "", college: "", email: "", linkedin: "", achievements: "" });
-  
-  // ADD THIS LINE:
-  window.dispatchEvent(new CustomEvent('alumniProfileAdded'));
-  
-  alert("Profile added! You've earned your first badge 🎉");
-};
 
 export default Alumni;
