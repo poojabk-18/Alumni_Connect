@@ -1,30 +1,17 @@
 const express = require("express");
-const mongoose = require("mongoose");
 const cors = require("cors");
+require("dotenv").config();
+
+const connectDB = require("./src/db/db");
 const userRoutes = require("./src/routes/UserRoutes");
 
 const app = express();
 
-// Middleware
+app.use(cors());
 app.use(express.json());
 
-// Enable CORS
-app.use(cors({
-  origin: "http://localhost:5173", // allow your frontend
-  methods: ["GET", "POST", "PUT", "DELETE"],
-  credentials: true
-}));
+connectDB();
 
-// Connect to MongoDB
-mongoose.connect("mongodb://localhost:27017/alumni_connect")
-  .then(() => console.log("✅ MongoDB connected"))
-  .catch((err) => console.error("❌ MongoDB connection error:", err));
+app.use("/auth", userRoutes);
 
-// Routes
-app.use("/api", userRoutes);
-
-// Start server
-const PORT = 3000;
-app.listen(PORT, () => {
-  console.log(`🚀 Server started at port ${PORT}`);
-});
+app.listen(8001, () => console.log("Server running"));
