@@ -1,6 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import student from './assets/students.png'
 
 function Home() {
   const [profileOpen, setProfileOpen] = useState(false);
@@ -10,53 +9,37 @@ function Home() {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-yellow-300 via-yellow-200 to-teal-400 font-[Poppins]">
       <div className="w-[90%] max-w-6xl bg-gray-100 rounded-3xl shadow-2xl p-10 lg:p-16">
         <header className="flex justify-between items-center">
-          {/* Logo + Text - Left side */}
+          {/* Logo + Text - FIXED */}
           <div className="flex items-center gap-3">
-            <img 
-              src={student}
-              alt="Alumni Connect" 
-              className="w-10 h-10 flex-shrink-0 rounded-lg"
-            />
+            <div className="w-10 h-10 bg-teal-600 flex items-center justify-center rounded-lg text-white font-bold text-sm flex-shrink-0">
+              AC
+            </div>
             <h1 className="text-teal-600 font-semibold tracking-wide text-xl">Alumni Connect</h1>
           </div>
 
-          {/* Navigation - Right side */}
+          {/* Navigation */}
           <nav className="hidden md:flex items-center gap-8 text-gray-600 font-semibold text-lg">
             <Link to="/" className="hover:underline">Home</Link>
             <Link to="/about" className="font-semibold hover:underline">About</Link>
             <Link to="/alumni" className="font-semibold hover:underline">Alumni</Link>
+            <Link to="/postpage" className="font-semibold hover:underline">Posts</Link> {/* ✅ WORKS */}
             
-            {/* Profile Dropdown */}
             <div className="relative">
               <button 
                 onClick={() => setProfileOpen(!profileOpen)}
                 className="flex items-center gap-2 bg-teal-600 hover:bg-teal-700 text-white px-5 py-2 rounded-full font-medium transition shadow-lg"
               >
-                <span>👤</span>
-                Profile
+                <span>👤</span> Profile
               </button>
-              
               {profileOpen && (
                 <div className="absolute right-0 mt-2 w-48 bg-white rounded-2xl shadow-2xl border border-gray-100 py-2 z-50">
-                  <Link 
-                    to="/profile" 
-                    className="block px-6 py-3 text-gray-700 hover:bg-teal-50 hover:text-teal-700 font-medium"
-                    onClick={() => setProfileOpen(false)}
-                  >
+                  <Link to="/profile" className="block px-6 py-3 text-gray-700 hover:bg-teal-50 hover:text-teal-700 font-medium" onClick={() => setProfileOpen(false)}>
                     👤 My Profile
                   </Link>
-                  <Link 
-                    to="/dashboard" 
-                    className="block px-6 py-3 text-gray-700 hover:bg-teal-50 hover:text-teal-700 font-medium"
-                    onClick={() => setProfileOpen(false)}
-                  >
+                  <Link to="/dashboard" className="block px-6 py-3 text-gray-700 hover:bg-teal-50 hover:text-teal-700 font-medium" onClick={() => setProfileOpen(false)}>
                     📊 Dashboard
                   </Link>
-                  <Link 
-                    to="/posts" 
-                    className="block px-6 py-3 text-gray-700 hover:bg-teal-50 hover:text-teal-700 font-medium"
-                    onClick={() => setProfileOpen(false)}
-                  >
+                  <Link to="/posts" className="block px-6 py-3 text-gray-700 hover:bg-teal-50 hover:text-teal-700 font-medium" onClick={() => setProfileOpen(false)}>
                     ✍️ Posts
                   </Link>
                 </div>

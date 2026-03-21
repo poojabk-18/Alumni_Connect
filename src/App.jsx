@@ -3,9 +3,10 @@ import Home from "./Home.jsx";
 import Alumni from "./Alumni.jsx";
 import About from "./About.jsx";
 import AlumniDetail from "./AlumniDetail.jsx";
-import Profile from "./Profile.jsx";  // New
-import Dashboard from "./Dashboard.jsx";  // New
-import Posts from "./Posts.jsx";  // New
+import Profile from "./Profile.jsx";
+import Dashboard from "./Dashboard.jsx"; 
+import Posts from "./Posts.jsx";  
+import PostPage from "./PostPage.jsx";  // ✅ IMPORT PostPage
 
 function App() {
   return (
@@ -18,7 +19,8 @@ function App() {
         <Route path="/alumni/:id" element={<AlumniDetail />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/posts" element={<Posts />} />
+        <Route path="/posts" element={<Posts />} />     {/* ✅ KEEP THIS */}
+        <Route path="/postpage" element={<PostPage />} />  // Different route!
       </Routes>
     </Router>
   );
