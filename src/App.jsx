@@ -1,17 +1,117 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Home from "./Home";
+// import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+
+// import Home from "./Home.jsx";
+// import About from "./About.jsx";
+// import Alumni from "./Alumni.jsx";
+// import AlumniDetail from "./AlumniDetail.jsx";
+// import Profile from "./Profile.jsx";
+// import Dashboard from "./Dashboard.jsx";
+// import Posts from "./Posts.jsx";
+// import PostPage from "./PostPage.jsx";
+
+// import Login from "./assets/components/Login";
+// import Signup from "./assets/components/Signup";
+// import ProtectedRoute from "./ProtectedRoute.jsx";
+
+// function App() {
+//   const token = localStorage.getItem("token");
+
+//   return (
+//     <Router>
+//       <Routes>
+
+//         {/* Redirect */}
+//         <Route 
+//           path="/" 
+//           element={token ? <Navigate to="/home" /> : <Navigate to="/login" />} 
+//         />
+
+//         {/* Auth */}
+//         <Route 
+//           path="/login" 
+//           element={token ? <Navigate to="/home" /> : <Login />} 
+//         />
+//         <Route 
+//           path="/signup" 
+//           element={token ? <Navigate to="/home" /> : <Signup />} 
+//         />
+
+//         {/* Protected Pages */}
+//         <Route path="/home" element={
+//           <ProtectedRoute>
+//             <Home />
+//           </ProtectedRoute>
+//         } />
+
+//         <Route path="/profile" element={
+//           <ProtectedRoute>
+//             <Profile />
+//           </ProtectedRoute>
+//         } />
+
+//         <Route path="/posts" element={
+//           <ProtectedRoute>
+//             <Posts />
+//           </ProtectedRoute>
+//         } />
+
+//         {/* 🔥 Only alumni can create posts */}
+//         <Route path="/postpage" element={
+//           <ProtectedRoute allowedRoles={["alumni"]}>
+//             <PostPage />
+//           </ProtectedRoute>
+//         } />
+
+//         {/* Optional */}
+//         <Route path="/about" element={<About />} />
+//         <Route path="/alumni" element={<Alumni />} />
+//         <Route path="/alumni/:id" element={<AlumniDetail />} />
+//         <Route path="/dashboard" element={<Dashboard />} />
+
+//       </Routes>
+//     </Router>
+//   );
+// }
+
+// export default App;
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import Home from "./Home.jsx";
+import About from "./About.jsx";
+import Alumni from "./Alumni.jsx";
+import AlumniDetail from "./AlumniDetail.jsx";
+import Profile from "./Profile.jsx";
+import Dashboard from "./Dashboard.jsx";
+import Posts from "./Posts.jsx";
+import PostPage from "./PostPage.jsx";
 import Login from "./assets/components/Login";
-import Alumni from "./Alumni";
-import About from "./About";
+import Signup from "./assets/components/Signup";
+import ProtectedRoute from "./ProtectedRoute.jsx";
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Home />} />
+        {/* 1. Fresh load → LOGIN if no token, HOME if logged in */}
+        <Route path="/" element={<Navigate to="/home" replace />} />
+
+        {/* 2. Login/Signup - ALWAYS accessible */}
         <Route path="/login" element={<Login />} />
-        <Route path="/alumni" element={<Alumni />} />
+        <Route path="/signup" element={<Signup />} />
+
+        {/* 3. ALL PROTECTED PAGES - ProtectedRoute handles token check */}
+        <Route path="/home" element={<ProtectedRoute><Home /></ProtectedRoute>} />
+        <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+        <Route path="/posts" element={<ProtectedRoute><Posts /></ProtectedRoute>} />
+        <Route path="/postpage" element={<ProtectedRoute allowedRoles={["alumni"]}><PostPage /></ProtectedRoute>} />
+        <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+
+        {/* 4. PUBLIC PAGES - always work */}
         <Route path="/about" element={<About />} />
+        <Route path="/alumni" element={<Alumni />} />
+        <Route path="/alumni/:id" element={<AlumniDetail />} />
+
+        {/* 5. Unknown URL → home */}
+        <Route path="*" element={<Navigate to="/home" replace />} />
       </Routes>
     </Router>
   );

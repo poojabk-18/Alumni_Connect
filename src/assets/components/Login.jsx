@@ -1,15 +1,104 @@
+// import { useState } from "react";
+// import axios from "axios";
+// import { useNavigate, Link } from "react-router-dom";
+
+// function Login() {
+//   const [email, setEmail] = useState("");
+//   const [password, setPassword] = useState("");
+//   const [error, setError] = useState("");
+
+//   const navigate = useNavigate();
+
+//   const handleSubmit = async (e) => {
+//     e.preventDefault();
+
+//     if (!email || !password) {
+//       setError("Please fill all fields");
+//       return;
+//     }
+
+//     try {
+//       const res = await axios.post("http://localhost:5000/api/auth/login", {
+//         email,
+//         password,
+//       });
+
+//       localStorage.setItem("token", res.data.token);
+
+//       navigate("/home");
+
+//     } catch (err) {
+//       setError(err.response?.data?.message || "Login failed");
+//     }
+//   };
+
+//   return (
+//     <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-yellow-300 via-yellow-200 to-teal-400 font-[Poppins]">
+//       <div className="bg-white rounded-3xl shadow-2xl p-10 w-[90%] max-w-md">
+
+//         <h2 className="text-3xl font-bold text-center text-green-900 mb-8">
+//           Welcome Back 
+//         </h2>
+
+//         <form onSubmit={handleSubmit} className="space-y-6">
+
+//           {/* Email */}
+//           <div>
+//             <label className="text-sm text-gray-600">Email</label>
+//             <input
+//               type="email"
+//               placeholder="Enter your email"
+//               className="w-full mt-2 px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-teal-400"
+//               onChange={(e) => setEmail(e.target.value)}
+//             />
+//           </div>
+
+//           {/* Password */}
+//           <div>
+//             <label className="text-sm text-gray-600">Password</label>
+//             <input
+//               type="password"
+//               placeholder="Enter your password"
+//               className="w-full mt-2 px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-teal-400"
+//               onChange={(e) => setPassword(e.target.value)}
+//             />
+//           </div>
+
+//           {error && (
+//             <p className="text-red-500 text-sm text-center">{error}</p>
+//           )}
+
+//           <button
+//             type="submit"
+//             className="w-full bg-yellow-400 hover:bg-yellow-500 py-3 rounded-xl font-semibold transition"
+//           >
+//             Log In
+//           </button>
+
+//           <p className="text-center text-sm text-gray-600">
+//             Don’t have an account?{" "}
+//             <Link to="/signup" className="text-teal-600 font-semibold hover:underline">
+//               Sign up
+//             </Link>
+//           </p>
+
+//         </form>
+//       </div>
+//     </div>
+//   );
+// }
+
+// export default Login;
 import { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";  // 👈 import navigate
+import { useNavigate, Link } from "react-router-dom";
 
 function Login() {
-  const [role, setRole] = useState("student");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
 
-  const navigate = useNavigate(); // 👈 initialize navigate
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -19,33 +108,19 @@ function Login() {
       return;
     }
 
-    if (password.length < 6) {
-      setError("Password must be at least 6 characters");
-      return;
-    }
-
-    setError("");
-    setSuccess("");
-
     try {
-      const res = await axios.post("http://localhost:3000/api/users", {
+      const res = await axios.post("http://localhost:8001/api/auth/login", {
         email,
         password,
-        role,
       });
 
-      setSuccess(res.data.message || "User added successfully");
-      setEmail("");
-      setPassword("");
+      localStorage.setItem("token", res.data.token);
+      localStorage.setItem("role", res.data.role); // <-- role from backend
 
-      alert(`Login Successful as ${role} 🚀`);
-
-      // 👇 redirect to home page
-      navigate("/");
+      navigate("/home");
 
     } catch (err) {
-      console.error(err);
-      setError(err.response?.data?.message || "Something went wrong");
+      setError(err.response?.data?.message || "Login failed");
     }
   };
 
@@ -53,23 +128,10 @@ function Login() {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-yellow-300 via-yellow-200 to-teal-400 font-[Poppins]">
       <div className="bg-white rounded-3xl shadow-2xl p-10 w-[90%] max-w-md">
         <h2 className="text-3xl font-bold text-center text-green-900 mb-8">
-          Add User
+          Welcome Back
         </h2>
 
         <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Role */}
-          <div>
-            <label className="text-sm text-gray-600">Role</label>
-            <select
-              className="w-full mt-2 px-4 py-3 rounded-xl border border-gray-300"
-              value={role}
-              onChange={(e) => setRole(e.target.value)}
-            >
-              <option value="student">Student</option>
-              <option value="alumni">Alumni</option>
-            </select>
-          </div>
-
           {/* Email */}
           <div>
             <label className="text-sm text-gray-600">Email</label>
@@ -77,8 +139,8 @@ function Login() {
               type="email"
               placeholder="Enter your email"
               className="w-full mt-2 px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-teal-400"
-              value={email}
               onChange={(e) => setEmail(e.target.value)}
+              value={email}
             />
           </div>
 
@@ -89,20 +151,31 @@ function Login() {
               type="password"
               placeholder="Enter your password"
               className="w-full mt-2 px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-teal-400"
-              value={password}
               onChange={(e) => setPassword(e.target.value)}
+              value={password}
             />
           </div>
 
-          {error && <p className="text-red-500 text-sm text-center">{error}</p>}
-          {success && <p className="text-green-500 text-sm text-center">{success}</p>}
+          {error && (
+            <p className="text-red-500 text-sm text-center">{error}</p>
+          )}
 
           <button
             type="submit"
             className="w-full bg-yellow-400 hover:bg-yellow-500 py-3 rounded-xl font-semibold transition"
           >
-            ADD USER
+            Log In
           </button>
+
+          <p className="text-center text-sm text-gray-600">
+            Don’t have an account?{" "}
+            <Link
+              to="/signup"
+              className="text-teal-600 font-semibold hover:underline"
+            >
+              Sign up
+            </Link>
+          </p>
         </form>
       </div>
     </div>

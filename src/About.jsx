@@ -2,12 +2,12 @@ import { Link } from "react-router-dom";
 
 function About() {
   return (
-    <div className="min-h-screen  from-yellow-200 via-yellow-300 to-teal-200 py-20 px-4 font-[Poppins]">
+    <div className="min-h-screen bg-linear-to-br from-yellow-200 via-yellow-300 to-teal-200 py-20 px-4 font-[Poppins]">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="text-center mb-16">
           <Link to="/" className="inline-block text-teal-800 font-semibold text-xl hover:underline mb-8">← Back to Home</Link>
-          <h1 className="text-5xl lg:text-6xl font-bold text-teal-700 mb-8 bg-gradient-to-r from-teal-600 to-teal-800 bg-clip-text text-transparent">
+          <h1 className="text-5xl lg:text-6xl font-bold text-cyan-800 mb-8 bg-linear-to-r from-teal-600 to-teal-800 bg-clip-text ">
             About Alumni Connect
           </h1>
         </div>
@@ -58,7 +58,7 @@ function About() {
               Join thousands of alumni building meaningful connections and advancing their careers.
             </p>
             <Link to="/alumni">
-              <button className="bg-gradient-to-r from-teal-600 to-teal-700 hover:from-teal-700 hover:to-teal-800 text-white px-12 py-5 rounded-full text-xl font-bold shadow-2xl hover:shadow-3xl transition-all duration-300 transform hover:-translate-y-1">
+              <button className="bg-linear-to-r from-teal-600 to-teal-700 hover:from-teal-700 hover:to-teal-800 text-white px-12 py-5 rounded-full text-xl font-bold shadow-2xl hover:shadow-3xl transition-all duration-300 transform hover:-translate-y-1">
                 🚀 Start Connecting
               </button>
             </Link>
