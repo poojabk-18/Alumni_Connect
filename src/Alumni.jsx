@@ -22,7 +22,7 @@ function Alumni() {
 
   const fetchAlumni = async () => {
     try {
-      const res = await axios.get("http://localhost:8001/alumni-profile");
+      const res = await axios.get("http://localhost:8001/api/alumni-profile");
       setAlumniList(res.data.alumniProfiles);
     } catch (error) {
       console.error(error);
@@ -40,7 +40,7 @@ function Alumni() {
       };
 
       await axios.post(
-        "http://localhost:8001/alumni-profile",
+        "http://localhost:8001/api/alumni-profile",
         dataToSend
       );
 

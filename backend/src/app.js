@@ -1,9 +1,16 @@
-const cors=require('cors')
-
 const express = require('express')
- const alumniProfileModel = require('./models/alumni_profile.model')
+const cors=require('cors')
+const multer = require('multer')
+
+
 
  const app = express()
+
+ const alumniProfileRoutes = require('./routes/alumni_profile.route')
+ const alumniPostRoutes = require('./routes/alumni_posts.route')
+
+
+
 
  app.use(express.urlencoded()) //middle wear
  app.use(cors());
@@ -11,34 +18,12 @@ const express = require('express')
 
 
 
- app.post('/alumni-profile',async (req,res) => {
-   await alumniProfileModel.create({
-        name: req.body.name,
-        profession: req.body.profession,
-        skills:req.body.skills,
-        college:req.body.college,
-        email:req.body.email,
-        linked_in:req.body.linked_in,
-        achievements:req.body.achievements
 
-    })
-    res.status(201).json({
-        message: 'alumni profile successfully pushed'
-    })
-
-    })
-
-    app.get('/alumni-profile',async (req,res) => {
-       const alumniData = await alumniProfileModel.find()
-        res.status(200).json({
-            message: 'Alumni profiles fetched successfully',
-            alumniProfiles : alumniData
-        })
-       
-    })
- 
-
+app.use("/api",alumniProfileRoutes)
+app.use("/api",alumniPostRoutes)
 
 
  module.exports = app
+
+
 
