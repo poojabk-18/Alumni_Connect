@@ -1,10 +1,14 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { useAuth } from "./AuthContext";
 
 function Alumni() {
+  const { addAlumniBadge } = useAuth();
+
   const [alumniList, setAlumniList] = useState([]);
   const [showModal, setShowModal] = useState(false);
+
   const [formData, setFormData] = useState({
     name: "",
     profession: "",
@@ -12,41 +16,41 @@ function Alumni() {
     college: "",
     email: "",
     linkedin: "",
-    email: "",
-    linkedin: "",
     achievements: "",
   });
 
-  // ✅ Fetch from backend
   useEffect(() => {
     fetchAlumni();
   }, []);
 
   const fetchAlumni = async () => {
     try {
-      const res = await axios.get("http://localhost:8001/api/alumni-profile");
-      setAlumniList(res.data.alumniProfiles);
+      const res = await axios.get(
+        "http://localhost:8001/api/alumni-profile"
+      );
+
+      setAlumniList(res.data.alumniProfiles || []);
     } catch (error) {
       console.error(error);
     }
   };
 
-  // ✅ Submit to backend
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const dataToSend = {
-        ...formData,
-        linked_in: formData.linkedin, // match backend
-      };
-
       await axios.post(
         "http://localhost:8001/api/alumni-profile",
-        dataToSend
+        {
+          ...formData,
+          linked_in: formData.linkedin,
+        }
       );
 
+      addAlumniBadge();
+
       setShowModal(false);
+
       setFormData({
         name: "",
         profession: "",
@@ -57,9 +61,9 @@ function Alumni() {
         achievements: "",
       });
 
-      fetchAlumni(); // refresh data
-      alert("Profile added! You've earned your first badge 🎉");
+      fetchAlumni();
 
+      alert("Profile added!");
     } catch (error) {
       console.error(error);
       alert("Error saving data");
@@ -67,134 +71,262 @@ function Alumni() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-teal-400 via-teal-300 to-gray-200 font-[Poppins] py-12 px-4">
-      <div className="max-w-6xl mx-auto">
+    <div className="min-h-screen bg-gradient-to-br from-teal-400 via-teal-300 to-gray-200 py-16 px-10 font-[Poppins]">
+
+      <div className="max-w-[1400px] mx-auto">
 
         {/* Header */}
         <div className="flex justify-between items-center mb-12">
-          <Link to="/" className="text-teal-800 font-semibold text-xl hover:underline">
+
+          <Link
+            to="/home"
+            className="text-teal-900 font-semibold text-lg hover:underline"
+          >
             ← Back to Home
           </Link>
-          <h1 className="text-4xl font-bold text-teal-700 tracking-wide">
-            Find Your Mentor
+
+          <h1 className="text-4xl font-bold text-teal-900">
+            Find Your Nexus Mentor
           </h1>
+
+          <div className="w-[140px]" />
+
         </div>
 
-        {/* Filters & Add Button */}
-        <div className="flex flex-wrap items-center justify-between gap-4 mb-8 bg-white/80 backdrop-blur-md rounded-2xl p-6 shadow-xl">
-          <div className="flex gap-2 text-sm text-teal-700 bg-teal-100 px-4 py-2 rounded-full">
-            <span>Industry</span>
-            <select className="bg-transparent border-none outline-none">
+        {/* Top Bar */}
+        <div className="bg-white rounded-2xl shadow-md px-8 py-6 flex flex-wrap gap-6 justify-between items-center mb-14">
+
+          <div className="flex items-center gap-3">
+
+            <span className="font-medium text-gray-700">
+              Industry
+            </span>
+
+            <select className="border rounded-lg px-4 py-2">
+
               <option>Tech</option>
               <option>Finance</option>
-              <option>Company</option>
               <option>Design</option>
-              <option>Expert</option>
+
             </select>
+
           </div>
 
-          <div className="text-teal-600 text-sm bg-yellow-200 px-4 py-2 rounded-full">
+          <div className="bg-yellow-300 text-yellow-900 px-5 py-2 rounded-full font-semibold text-sm">
             Get matched in 30s • {alumniList.length} Active
           </div>
 
           <button
             onClick={() => setShowModal(true)}
-            className="bg-teal-800 hover:bg-teal-700 text-white px-8 py-3 rounded-full font-medium transition shadow-lg"
+            className="bg-teal-700 hover:bg-teal-800 text-white px-7 py-3 rounded-full font-semibold shadow-lg transition"
           >
-            ➕ Add Profile
+            + Add Profile
           </button>
+
         </div>
 
-        {/* Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {/* Cards Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10">
+
           {alumniList.map((alum) => (
-            <div key={alum._id} className="bg-white rounded-2xl p-6 shadow-xl hover:shadow-2xl transition transform hover:-translate-y-2 border-2 border-gray-100">
-              
-              <div className="w-20 h-20 bg-gradient-to-br from-teal-400 to-teal-600 rounded-full mx-auto mb-4 flex items-center justify-center">
-                <span className="text-2xl">👤</span>
-                <span className="text-2xl">👤</span>
-              </div>
 
-              <h3 className="text-xl font-bold text-teal-700 text-center mb-2">
-                {alum.name}
-              </h3>
+            <div
+              key={alum._id}
+              className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 min-h-[300px] flex flex-col justify-between text-center"
+            >
 
-              <p className="text-teal-600 font-medium text-center mb-4">
-                {alum.profession}
-              </p>
+              <div>
 
-              <div className="flex justify-center gap-2 mb-4">
-                <span className="px-3 py-1 bg-teal-100 text-teal-700 rounded-full text-sm">
+                {/* Avatar */}
+                <div className="w-24 h-24 bg-teal-400 rounded-full flex items-center justify-center mx-auto mb-6 text-2xl">
+                  👤
+                </div>
+
+                <h3 className="font-bold text-lg text-teal-800 mb-2">
+                  {alum.name}
+                </h3>
+
+                <p className="text-gray-600 mb-3">
+                  {alum.profession}
+                </p>
+
+                <div className="bg-teal-100 text-teal-700 px-4 py-1 rounded-full text-sm inline-block mb-4">
                   {alum.skills}
-                </span>
+                </div>
+
+                <p className="text-gray-500 text-sm mb-2">
+                  {alum.college}
+                </p>
+
+                {alum.email && (
+                  <p className="text-gray-400 text-sm">
+                    {alum.email}
+                  </p>
+                )}
+
               </div>
 
-              <p className="text-gray-600 text-sm text-center mb-2">
-                {alum.college}
-              </p>
-
-              <div className="space-y-1 mb-4 text-xs text-gray-500 text-center">
-                <div>📧 {alum.email}</div>
-                <div>💼 {alum.linked_in}</div>
-              </div>
-
-              <div className="flex justify-center">
-                <span className="px-4 py-1 bg-yellow-400 text-black rounded-full text-xs font-bold">
-                  ⭐ Alumni
-                </span>
-              </div>
+              <span className="bg-yellow-400 px-4 py-1 rounded-full text-sm font-semibold mt-6">
+                Alumni
+              </span>
 
             </div>
+
           ))}
+
         </div>
+
+        {/* Empty State */}
+        {alumniList.length === 0 && (
+
+          <div className="text-center py-24">
+
+            <h3 className="text-2xl font-bold text-teal-800 mb-4">
+              No Alumni Profiles Yet
+            </h3>
+
+            <button
+              onClick={() => setShowModal(true)}
+              className="bg-teal-700 hover:bg-teal-800 text-white px-10 py-4 rounded-xl font-semibold shadow-lg"
+            >
+              Add First Profile
+            </button>
+
+          </div>
+
+        )}
+
       </div>
 
       {/* Modal */}
       {showModal && (
+
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+
           <div className="bg-white rounded-3xl p-8 max-w-md w-full shadow-2xl">
-            
-            <h2 className="text-2xl font-bold text-teal-700 mb-6 text-center">
+
+            <h2 className="text-2xl font-bold text-teal-800 mb-6 text-center">
               Complete Your Profile
             </h2>
 
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form
+              onSubmit={handleSubmit}
+              className="space-y-4"
+            >
 
-              {Object.keys(formData).map((field) => (
-                <input
-                  key={field}
-                  type="text"
-                  placeholder={field}
-                  value={formData[field]}
-                  onChange={(e) =>
-                    setFormData({ ...formData, [field]: e.target.value })
-                  }
-                  className="w-full p-3 border border-gray-300 rounded-xl"
-                  required={field !== "achievements"}
-                />
-              ))}
+              <input
+                type="text"
+                placeholder="Full Name"
+                value={formData.name}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    name: e.target.value,
+                  })
+                }
+                className="w-full p-3 border rounded-xl"
+                required
+              />
+
+              <input
+                type="text"
+                placeholder="Profession"
+                value={formData.profession}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    profession: e.target.value,
+                  })
+                }
+                className="w-full p-3 border rounded-xl"
+                required
+              />
+
+              <input
+                type="text"
+                placeholder="Skills"
+                value={formData.skills}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    skills: e.target.value,
+                  })
+                }
+                className="w-full p-3 border rounded-xl"
+                required
+              />
+
+              <input
+                type="text"
+                placeholder="College"
+                value={formData.college}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    college: e.target.value,
+                  })
+                }
+                className="w-full p-3 border rounded-xl"
+                required
+              />
+
+              <input
+                type="email"
+                placeholder="Email"
+                value={formData.email}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    email: e.target.value,
+                  })
+                }
+                className="w-full p-3 border rounded-xl"
+                required
+              />
+
+              <input
+                type="text"
+                placeholder="LinkedIn"
+                value={formData.linkedin}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    linkedin: e.target.value,
+                  })
+                }
+                className="w-full p-3 border rounded-xl"
+                required
+              />
 
               <div className="flex gap-3 pt-4">
+
                 <button
                   type="button"
-                  onClick={() => setShowModal(false)}
-                  className="flex-1 bg-gray-300 py-3 rounded-xl"
+                  onClick={() =>
+                    setShowModal(false)
+                  }
+                  className="flex-1 bg-gray-300 hover:bg-gray-400 py-3 rounded-xl"
                 >
                   Cancel
                 </button>
 
                 <button
                   type="submit"
-                  className="flex-1 bg-teal-600 text-white py-3 rounded-xl"
+                  className="flex-1 bg-teal-700 hover:bg-teal-800 text-white py-3 rounded-xl font-semibold"
                 >
                   Submit
                 </button>
+
               </div>
 
             </form>
+
           </div>
+
         </div>
+
       )}
+
     </div>
   );
 }

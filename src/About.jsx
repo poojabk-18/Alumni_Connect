@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 function About() {
   return (
-    <div className="min-h-screen  from-yellow-200 via-yellow-300 to-teal-200 py-20 px-4 font-[Poppins]">
+    <div className="min-h-screen bg-gradient-to-r from-yellow-200 via-yellow-300 to-teal-200 py-20 px-4 font-[Poppins]">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="text-center mb-16">
@@ -69,4 +69,4 @@ function About() {
   );
 }
 
-export default About;
+export default About; 

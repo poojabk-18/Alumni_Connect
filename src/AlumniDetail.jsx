@@ -16,7 +16,7 @@ function AlumniDetail() {
   if (!alum) return <div>Loading...</div>;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-teal-400 via-teal-300 to-gray-200 py-12 px-4 font-[Poppins]">
+    <div className="min-h-screen bg-linear-to-br from-teal-400 via-teal-300 to-gray-200 py-12 px-4 font-[Poppins]">
       <div className="max-w-4xl mx-auto">
         <Link to="/alumni" className="inline-flex items-center gap-2 text-teal-800 font-semibold text-xl hover:underline mb-12">
           ← Back to Alumni
@@ -24,7 +24,7 @@ function AlumniDetail() {
         
         <div className="bg-white rounded-3xl p-12 shadow-2xl">
           <div className="text-center mb-12">
-            <div className="w-32 h-32 bg-gradient-to-br from-teal-400 to-teal-600 rounded-full mx-auto mb-6 flex items-center justify-center">
+            <div className="w-32 h-32 bg-linear-to-br from-teal-400 to-teal-600 rounded-full mx-auto mb-6 flex items-center justify-center">
               <span className="text-5xl">👤</span>
             </div>
             <h1 className="text-4xl font-bold text-teal-700 mb-2">{alum.name}</h1>

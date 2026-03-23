@@ -1,2 +1,31 @@
 @import "tailwindcss";
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+/* Apply font everywhere */
+:root {
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Reset spacing issues */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* FORCE ALL PAGES TO BE CENTERED */
+body {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;   /* horizontal center */
+  align-items: flex-start;   /* top alignment with spacing */
+  background: #f8fafc;
+}
+
+/* This is the main app container */
+#root {
+  width: 100%;
+  max-width: 1400px;   /* controls page width globally */
+  margin: 0 auto;
+  padding: 24px;
+}

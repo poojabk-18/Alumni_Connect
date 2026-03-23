@@ -1,29 +1,41 @@
-
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import Home from "./Home.jsx";
-import Alumni from "./Alumni.jsx";
 import About from "./About.jsx";
+import Alumni from "./Alumni.jsx";
 import AlumniDetail from "./AlumniDetail.jsx";
 import Profile from "./Profile.jsx";
 import Dashboard from "./Dashboard.jsx";
 import CreatePost from "./CreatePost.jsx";
-import FeedPage from "./FeedPage.jsx";  
-
+import FeedPage from "./FeedPage.jsx";
+import Login from "./assets/components/Login";
+import Signup from "./assets/components/Signup";
+import ProtectedRoute from "./ProtectedRoute.jsx";
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Navigate to="/home" replace />} />
 
+        {/* Auth */}
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+
+        {/* Protected - All roles */}
+        <Route path="/home" element={<ProtectedRoute><Home /></ProtectedRoute>} />
         <Route path="/about" element={<About />} />
-        <Route path="/login" element={<div className="p-8 text-center">Login Coming Soon</div>} />
         <Route path="/alumni" element={<Alumni />} />
         <Route path="/alumni/:id" element={<AlumniDetail />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/create-post" element={<CreatePost />} />     {/* ✅ KEEP THIS */} 
-        <Route path="/feed" element={<FeedPage />} />  // Different route! 
+
+        {/* Feed - Both students AND alumni */}
+        <Route path="/feed" element={<ProtectedRoute><FeedPage /></ProtectedRoute>} />
+
+        {/* Alumni ONLY */}
+        <Route path="/create-post" element={<ProtectedRoute allowedRoles={["alumni"]}><CreatePost /></ProtectedRoute>} />
+        <Route path="/profile" element={<ProtectedRoute allowedRoles={["alumni"]}><Profile /></ProtectedRoute>} />
+        <Route path="/dashboard" element={<ProtectedRoute allowedRoles={["alumni"]}><Dashboard /></ProtectedRoute>} />
+
+        <Route path="*" element={<Navigate to="/home" replace />} />
       </Routes>
     </Router>
   );
