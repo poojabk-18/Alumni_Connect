@@ -18,23 +18,23 @@
 // }
 
 // export default ProtectedRoute;
-import { Navigate, useLocation } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
 const ProtectedRoute = ({ children, allowedRoles = null }) => {
   const token = localStorage.getItem("token");
   const role = localStorage.getItem("role");
 
-  // ONLY redirect to login if NO TOKEN
+  // No token → Login
   if (!token) {
     return <Navigate to="/login" replace />;
   }
 
-  // Role check
+  // Specific role required?
   if (allowedRoles && !allowedRoles.includes(role)) {
     return <Navigate to="/home" replace />;
   }
 
-  return children; // ✅ SHOW PAGE - token exists!
+  return children;
 };
 
 export default ProtectedRoute;

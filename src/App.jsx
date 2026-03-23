@@ -91,26 +91,24 @@ function App() {
   return (
     <Router>
       <Routes>
-        {/* 1. Fresh load → LOGIN if no token, HOME if logged in */}
         <Route path="/" element={<Navigate to="/home" replace />} />
-
-        {/* 2. Login/Signup - ALWAYS accessible */}
+        
+        {/* Auth */}
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
 
-        {/* 3. ALL PROTECTED PAGES - ProtectedRoute handles token check */}
+        {/* Protected - All roles */}
         <Route path="/home" element={<ProtectedRoute><Home /></ProtectedRoute>} />
-        <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
         <Route path="/posts" element={<ProtectedRoute><Posts /></ProtectedRoute>} />
-        <Route path="/postpage" element={<ProtectedRoute allowedRoles={["alumni"]}><PostPage /></ProtectedRoute>} />
-        <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
-
-        {/* 4. PUBLIC PAGES - always work */}
         <Route path="/about" element={<About />} />
         <Route path="/alumni" element={<Alumni />} />
         <Route path="/alumni/:id" element={<AlumniDetail />} />
 
-        {/* 5. Unknown URL → home */}
+        {/* Alumni ONLY */}
+        <Route path="/profile" element={<ProtectedRoute allowedRoles={["alumni"]}><Profile /></ProtectedRoute>} />
+        <Route path="/dashboard" element={<ProtectedRoute allowedRoles={["alumni"]}><Dashboard /></ProtectedRoute>} />
+        <Route path="/postpage" element={<ProtectedRoute allowedRoles={["alumni"]}><PostPage /></ProtectedRoute>} />
+
         <Route path="*" element={<Navigate to="/home" replace />} />
       </Routes>
     </Router>
