@@ -10,6 +10,7 @@ const multer = require('multer')
  const upload = multer({storage: multer.memoryStorage()})
 
  router.post('/post-content',upload.single("image"),alumniPostsController.createPost)
+ router.get('/feed',alumniPostsController.getPost)
 
 
  module.exports = router

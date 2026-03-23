@@ -12,6 +12,8 @@ function Alumni() {
     college: "",
     email: "",
     linkedin: "",
+    email: "",
+    linkedin: "",
     achievements: "",
   });
 
@@ -74,7 +76,7 @@ function Alumni() {
             ← Back to Home
           </Link>
           <h1 className="text-4xl font-bold text-teal-700 tracking-wide">
-            Find Your Nexus Mentor
+            Find Your Mentor
           </h1>
         </div>
 
@@ -97,7 +99,7 @@ function Alumni() {
 
           <button
             onClick={() => setShowModal(true)}
-            className="bg-teal-600 hover:bg-teal-700 text-white px-8 py-3 rounded-full font-medium transition shadow-lg"
+            className="bg-teal-800 hover:bg-teal-700 text-white px-8 py-3 rounded-full font-medium transition shadow-lg"
           >
             ➕ Add Profile
           </button>
@@ -109,6 +111,7 @@ function Alumni() {
             <div key={alum._id} className="bg-white rounded-2xl p-6 shadow-xl hover:shadow-2xl transition transform hover:-translate-y-2 border-2 border-gray-100">
               
               <div className="w-20 h-20 bg-gradient-to-br from-teal-400 to-teal-600 rounded-full mx-auto mb-4 flex items-center justify-center">
+                <span className="text-2xl">👤</span>
                 <span className="text-2xl">👤</span>
               </div>
 
