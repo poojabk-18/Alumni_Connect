@@ -7,8 +7,8 @@ import Profile from "./Profile.jsx";
 import Dashboard from "./Dashboard.jsx";
 import CreatePost from "./CreatePost.jsx";
 import FeedPage from "./FeedPage.jsx";
-import Login from "./assets/components/Login";
-import Signup from "./assets/components/Signup";
+import Login from "./assets/components/Login.jsx";
+import Signup from "./assets/components/Signup.jsx";
 import ProtectedRoute from "./ProtectedRoute.jsx";
 
 function App() {

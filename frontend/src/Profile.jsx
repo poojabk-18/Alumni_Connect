@@ -190,7 +190,7 @@ function Profile() {
                     display: 'inline-block', padding: '1rem 2.5rem', background: 'linear-gradient(135deg, #0ea5e9, #14b8a6)',
                     color: 'white', textDecoration: 'none', borderRadius: '25px', fontWeight: '600', fontSize: '1.1rem'
                   }}>
-                    🚀 View Projects/Proof
+                    View Projects/Proof
                   </a>
                 </div>
               )}
@@ -272,7 +272,7 @@ function Profile() {
 
               <div style={{display: 'flex', gap: '1.5rem'}}>
                 <button type="button" onClick={() => setShowAddModal(false)} style={{flex: 1, padding: '1.5rem', background: '#6b7280', color: 'white', border: 'none', borderRadius: '16px', fontSize: '1.1rem', fontWeight: 'bold', cursor: 'pointer'}}>Cancel</button>
-                <button type="submit" style={{flex: 1, padding: '1.5rem', background: 'linear-gradient(135deg, #10b981, #059669)', color: 'white', border: 'none', borderRadius: '16px', fontSize: '1.1rem', fontWeight: 'bold', cursor: 'pointer', boxShadow: '0 10px 25px rgba(16,185,129,0.4)'}}>🚀 Submit & Earn Badge</button>
+                <button type="submit" style={{flex: 1, padding: '1.5rem', background: 'linear-gradient(135deg, #10b981, #059669)', color: 'white', border: 'none', borderRadius: '16px', fontSize: '1.1rem', fontWeight: 'bold', cursor: 'pointer', boxShadow: '0 10px 25px rgba(16,185,129,0.4)'}}> Submit & Earn Badge</button>
               </div>
             </form>
           </div>

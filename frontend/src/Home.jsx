@@ -90,7 +90,7 @@ function Home() {
           <div className="lg:w-1/2 space-y-7 pl-4">
 
             <div className="inline-flex items-center gap-2 bg-yellow-100 border border-yellow-300 text-yellow-700 px-4 py-1.5 rounded-full text-xs font-bold tracking-wide">
-              🚀 Welcome {isStudent ? "Student" : isAlumni ? "Alumni" : "Guest"}
+               Welcome {isStudent ? "Student" : isAlumni ? "Alumni" : "Guest"}
             </div>
 
             <h1 className="text-6xl lg:text-7xl font-black text-green-900 leading-[1.05] tracking-tight">
@@ -116,7 +116,7 @@ function Home() {
               </Link>
             </div>
 
-            {/* Stats */}
+            
             <div className="flex items-center gap-8 pt-4">
               <div>
                 <div className="text-2xl font-black text-gray-800">5K+</div>

@@ -59,7 +59,7 @@ function About() {
             </p>
             <Link to="/alumni">
               <button className="bg-gradient-to-r from-teal-600 to-teal-700 hover:from-teal-700 hover:to-teal-800 text-white px-12 py-5 rounded-full text-xl font-bold shadow-2xl hover:shadow-3xl transition-all duration-300 transform hover:-translate-y-1">
-                🚀 Start Connecting
+                 Start Connecting
               </button>
             </Link>
           </div>
